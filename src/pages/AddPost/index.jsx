@@ -1,4 +1,8 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
+import { selectIsAuth } from '../../redux/slices/auth';
+
 import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
@@ -9,7 +13,10 @@ import styles from './AddPost.module.scss';
 
 export const AddPost = () => {
   const imageUrl = '';
+  const isAuth = useSelector(selectIsAuth);
   const [value, setValue] = React.useState('');
+  const [title, setTitle] = React.useState('');
+  const [tags, setTags] = React.useState('');
 
   const handleChangeFile = () => {};
 
@@ -31,39 +38,54 @@ export const AddPost = () => {
         delay: 1000,
       },
     }),
-    [],
+    []
   );
+
+  if (!window.localStorage.getItem('token') && !isAuth) {
+    return <Navigate to='/' />;
+  }
+
+  console.log({ title, tags, value });
 
   return (
     <Paper style={{ padding: 30 }}>
-      <Button variant="outlined" size="large">
+      <Button variant='outlined' size='large'>
         Загрузить превью
       </Button>
-      <input type="file" onChange={handleChangeFile} hidden />
+      <input type='file' onChange={handleChangeFile} hidden />
       {imageUrl && (
-        <Button variant="contained" color="error" onClick={onClickRemoveImage}>
+        <Button variant='contained' color='error' onClick={onClickRemoveImage}>
           Удалить
         </Button>
       )}
       {imageUrl && (
-        <img className={styles.image} src={`http://localhost:4444${imageUrl}`} alt="Uploaded" />
+        <img className={styles.image} src={`http://localhost:4444${imageUrl}`} alt='Uploaded' />
       )}
       <br />
       <br />
       <TextField
         classes={{ root: styles.title }}
-        variant="standard"
-        placeholder="Заголовок статьи..."
+        variant='standard'
+        placeholder='Заголовок статьи...'
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
         fullWidth
       />
-      <TextField classes={{ root: styles.tags }} variant="standard" placeholder="Тэги" fullWidth />
+      <TextField
+        classes={{ root: styles.tags }}
+        variant='standard'
+        placeholder='Тэги'
+        value={tags}
+        onChange={(e) => setTags(e.target.value)}
+        fullWidth
+      />
       <SimpleMDE className={styles.editor} value={value} onChange={onChange} options={options} />
       <div className={styles.buttons}>
-        <Button size="large" variant="contained">
+        <Button size='large' variant='contained'>
           Опубликовать
         </Button>
-        <a href="/">
-          <Button size="large">Отмена</Button>
+        <a href='/'>
+          <Button size='large'>Отмена</Button>
         </a>
       </div>
     </Paper>
