@@ -21,9 +21,6 @@ export const Home = () => {
     dispatch(fetchTags());
   }, [dispatch]);
 
-  console.log(posts);
-  console.log(tags);
-
   return (
     <>
       <Tabs style={{ marginBottom: 15 }} value={0} aria-label='basic tabs example'>
