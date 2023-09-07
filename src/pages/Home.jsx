@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -7,9 +7,10 @@ import Grid from '@mui/material/Grid';
 import { Post } from '../components/Post';
 import { TagsBlock } from '../components/TagsBlock';
 import { CommentsBlock } from '../components/CommentsBlock';
-import { fetchPosts, fetchTags } from '../redux/slices/post';
+import { fetchPostsNew, fetchPostsPopular, fetchTags } from '../redux/slices/post';
 
 export const Home = () => {
+  const [activeSort, setActiveSort] = useState(0);
   const { posts, tags } = useSelector((state) => state.posts);
   const userData = useSelector((state) => state.auth.data);
   const dispatch = useDispatch();
@@ -18,13 +19,28 @@ export const Home = () => {
   const isTagsLoading = tags.status === 'loading';
 
   React.useEffect(() => {
-    dispatch(fetchPosts());
+    dispatch(fetchPostsNew());
     dispatch(fetchTags());
   }, [dispatch]);
 
+  const handleSortChange = () => {
+    if (activeSort === 0) {
+      setActiveSort(1);
+      dispatch(fetchPostsPopular());
+    } else {
+      setActiveSort(0);
+      dispatch(fetchPostsNew());
+    }
+  };
+
   return (
     <>
-      <Tabs style={{ marginBottom: 15 }} value={0} aria-label='basic tabs example'>
+      <Tabs
+        style={{ marginBottom: 15 }}
+        onChange={handleSortChange}
+        value={activeSort}
+        aria-label='basic tabs example'
+      >
         <Tab label='Новые' />
         <Tab label='Популярные' />
       </Tabs>

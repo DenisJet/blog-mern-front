@@ -1,8 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../../axios';
 
-export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
-  const { data } = await axios.get('/posts');
+export const fetchPostsNew = createAsyncThunk('posts/fetchPostsNew', async () => {
+  const { data } = await axios.get('/posts/new');
+  return data;
+});
+
+export const fetchPostsPopular = createAsyncThunk('posts/fetchPostsPopular', async () => {
+  const { data } = await axios.get('/posts/popular');
   return data;
 });
 
@@ -31,16 +36,30 @@ const postsSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
-    // Получение статей
-    [fetchPosts.pending]: (state) => {
+    // Получение новых статей
+    [fetchPostsNew.pending]: (state) => {
       state.posts.items = [];
       state.posts.status = 'loading';
     },
-    [fetchPosts.fulfilled]: (state, action) => {
+    [fetchPostsNew.fulfilled]: (state, action) => {
       state.posts.items = action.payload;
       state.posts.status = 'loaded';
     },
-    [fetchPosts.rejected]: (state) => {
+    [fetchPostsNew.rejected]: (state) => {
+      state.posts.items = [];
+      state.posts.status = 'error';
+    },
+
+    // Получение популярных статей
+    [fetchPostsPopular.pending]: (state) => {
+      state.posts.items = [];
+      state.posts.status = 'loading';
+    },
+    [fetchPostsPopular.fulfilled]: (state, action) => {
+      state.posts.items = action.payload;
+      state.posts.status = 'loaded';
+    },
+    [fetchPostsPopular.rejected]: (state) => {
       state.posts.items = [];
       state.posts.status = 'error';
     },
