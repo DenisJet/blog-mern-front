@@ -1,5 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import axios from '../axios';
 import ReactMarkdown from 'react-markdown';
 
@@ -8,6 +9,7 @@ import { Index } from '../components/AddComment';
 import { CommentsBlock } from '../components/CommentsBlock';
 
 export const FullPost = () => {
+  const userData = useSelector((state) => state.auth.data);
   const [data, setData] = React.useState();
   const [isLoading, setLoading] = React.useState(true);
 
@@ -39,32 +41,14 @@ export const FullPost = () => {
         user={data.user}
         createdAt={data.createdAt}
         viewsCount={data.viewsCount}
-        commentsCount={3}
+        commentsCount={data.comments.length}
         tags={data.tags}
         isFullPost
       >
         <ReactMarkdown children={data.text} />
       </Post>
-      <CommentsBlock
-        items={[
-          {
-            user: {
-              fullName: 'Вася Пупкин',
-              avatarUrl: 'https://mui.com/static/images/avatar/1.jpg',
-            },
-            text: 'Это тестовый комментарий 555555',
-          },
-          {
-            user: {
-              fullName: 'Иван Иванов',
-              avatarUrl: 'https://mui.com/static/images/avatar/2.jpg',
-            },
-            text: 'When displaying three lines or more, the avatar is not aligned at the top. You should set the prop to align the avatar at the top',
-          },
-        ]}
-        isLoading={false}
-      >
-        <Index />
+      <CommentsBlock items={data.comments} isLoading={false}>
+        <Index avatarUrl={userData?.avatarUrl} id={data._id} />
       </CommentsBlock>
     </>
   );
