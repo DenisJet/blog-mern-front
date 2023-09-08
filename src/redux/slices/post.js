@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../../axios';
 
-export const fetchPostsNew = createAsyncThunk('posts/fetchPostsNew', async () => {
+export const fetchPostsSortByNew = createAsyncThunk('posts/fetchPostsNew', async () => {
   const { data } = await axios.get('/posts/new');
   return data;
 });
 
-export const fetchPostsPopular = createAsyncThunk('posts/fetchPostsPopular', async () => {
+export const fetchPostsSortByPopular = createAsyncThunk('posts/fetchPostsPopular', async () => {
   const { data } = await axios.get('/posts/popular');
   return data;
 });
@@ -42,29 +42,29 @@ const postsSlice = createSlice({
   reducers: {},
   extraReducers: {
     // Получение новых статей
-    [fetchPostsNew.pending]: (state) => {
+    [fetchPostsSortByNew.pending]: (state) => {
       state.posts.items = [];
       state.posts.status = 'loading';
     },
-    [fetchPostsNew.fulfilled]: (state, action) => {
+    [fetchPostsSortByNew.fulfilled]: (state, action) => {
       state.posts.items = action.payload;
       state.posts.status = 'loaded';
     },
-    [fetchPostsNew.rejected]: (state) => {
+    [fetchPostsSortByNew.rejected]: (state) => {
       state.posts.items = [];
       state.posts.status = 'error';
     },
 
     // Получение популярных статей
-    [fetchPostsPopular.pending]: (state) => {
+    [fetchPostsSortByPopular.pending]: (state) => {
       state.posts.items = [];
       state.posts.status = 'loading';
     },
-    [fetchPostsPopular.fulfilled]: (state, action) => {
+    [fetchPostsSortByPopular.fulfilled]: (state, action) => {
       state.posts.items = action.payload;
       state.posts.status = 'loaded';
     },
-    [fetchPostsPopular.rejected]: (state) => {
+    [fetchPostsSortByPopular.rejected]: (state) => {
       state.posts.items = [];
       state.posts.status = 'error';
     },

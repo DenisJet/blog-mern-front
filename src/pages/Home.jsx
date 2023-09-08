@@ -8,8 +8,8 @@ import { Post } from '../components/Post';
 import { TagsBlock } from '../components/TagsBlock';
 import { CommentsBlock } from '../components/CommentsBlock';
 import {
-  fetchPostsNew,
-  fetchPostsPopular,
+  fetchPostsSortByNew,
+  fetchPostsSortByPopular,
   fetchTags,
   selectLastComments,
 } from '../redux/slices/post';
@@ -26,17 +26,17 @@ export const Home = () => {
   const isTagsLoading = tags.status === 'loading';
 
   React.useEffect(() => {
-    dispatch(fetchPostsNew());
+    dispatch(fetchPostsSortByNew());
     dispatch(fetchTags());
   }, [dispatch]);
 
   const handleSortChange = () => {
     if (activeSort === 0) {
       setActiveSort(1);
-      dispatch(fetchPostsPopular());
+      dispatch(fetchPostsSortByPopular());
     } else {
       setActiveSort(0);
-      dispatch(fetchPostsNew());
+      dispatch(fetchPostsSortByNew());
     }
   };
 

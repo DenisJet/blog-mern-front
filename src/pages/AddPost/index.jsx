@@ -11,6 +11,7 @@ import SimpleMDE from 'react-simplemde-editor';
 
 import 'easymde/dist/easymde.min.css';
 import styles from './AddPost.module.scss';
+import toast from 'react-hot-toast';
 
 export const AddPost = () => {
   const { id } = useParams();
@@ -34,7 +35,7 @@ export const AddPost = () => {
       setImageUrl(data.url);
     } catch (err) {
       console.warn(err);
-      alert('Ошибка при загрузке файла');
+      toast.error('Ошибка при загрузке файла');
     }
   };
 
@@ -59,7 +60,8 @@ export const AddPost = () => {
       const _id = isEditing ? id : data._id;
       navigate(`/posts/${_id}`);
     } catch (err) {
-      console.warn(alert('Ошибка при создании статьи'));
+      console.warn(err);
+      toast.error('Ошибка при создании статьи');
     }
   };
 
@@ -75,7 +77,7 @@ export const AddPost = () => {
         })
         .catch((err) => {
           console.warn(err);
-          alert('Ошибка при получении статьи');
+          toast.error('Ошибка при получении статьи');
         });
     }
   }, [id]);

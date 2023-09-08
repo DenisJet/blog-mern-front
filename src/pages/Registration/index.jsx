@@ -11,6 +11,7 @@ import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 
 import styles from './Login.module.scss';
+import toast from 'react-hot-toast';
 
 export const Registration = () => {
   const isAuth = useSelector(selectIsAuth);
@@ -21,7 +22,7 @@ export const Registration = () => {
     setError,
     formState: { errors, isValid },
   } = useForm({
-    defaultValues: { fullName: 'Denis Jet', email: 'denis@test.ru', password: '1234' },
+    defaultValues: { fullName: '', email: '', password: '' },
     mode: 'onChange',
   });
 
@@ -29,7 +30,7 @@ export const Registration = () => {
     const data = await dispatch(fetchRegister(values));
 
     if (!data.payload) {
-      return alert('Не удалось зарегистрироваться!');
+      toast.error('Не удалось зарегистрироваться!');
     }
 
     if ('token' in data.payload) {
@@ -50,6 +51,7 @@ export const Registration = () => {
         <Avatar sx={{ width: 100, height: 100 }} />
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
+        <small>* min 3 char</small>
         <TextField
           className={styles.field}
           label='Полное имя'
@@ -58,6 +60,7 @@ export const Registration = () => {
           {...register('fullName', { required: 'Укажите полное имя' })}
           fullWidth
         />
+        <small>* format name@mail.reg</small>
         <TextField
           className={styles.field}
           label='E-Mail'
@@ -67,6 +70,7 @@ export const Registration = () => {
           {...register('email', { required: 'Укажите почту' })}
           fullWidth
         />
+        <small>* min 5 char</small>
         <TextField
           className={styles.field}
           label='Пароль'

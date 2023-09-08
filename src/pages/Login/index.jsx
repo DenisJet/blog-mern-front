@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form';
 
 import styles from './Login.module.scss';
 import { fetchAuth, selectIsAuth } from '../../redux/slices/auth';
+import toast from 'react-hot-toast';
 
 export const Login = () => {
   const isAuth = useSelector(selectIsAuth);
@@ -27,7 +28,7 @@ export const Login = () => {
     const data = await dispatch(fetchAuth(values));
 
     if (!data.payload) {
-      return alert('Не удалось авторизоваться!');
+      toast.error('Не удалось авторизоваться!');
     }
 
     if ('token' in data.payload) {

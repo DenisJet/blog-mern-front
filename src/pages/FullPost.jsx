@@ -7,6 +7,7 @@ import ReactMarkdown from 'react-markdown';
 import { Post } from '../components/Post';
 import { Index } from '../components/AddComment';
 import { CommentsBlock } from '../components/CommentsBlock';
+import toast from 'react-hot-toast';
 
 export const FullPost = () => {
   const userData = useSelector((state) => state.auth.data);
@@ -24,7 +25,7 @@ export const FullPost = () => {
       })
       .catch((err) => {
         console.warn(err);
-        alert('Ошибка при получении статьи');
+        toast.error('Ошибка при получении статьи');
       });
   }, [id]);
 
