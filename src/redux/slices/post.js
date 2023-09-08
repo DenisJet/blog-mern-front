@@ -104,4 +104,15 @@ const postsSlice = createSlice({
   },
 });
 
+export const selectLastComments = (state) => {
+  const lastComments = [];
+
+  state.posts.posts.items.forEach((item) => {
+    const comments = item.comments.slice().reverse();
+    lastComments.push(comments[0]);
+  });
+
+  return lastComments.flat().slice(0, 5);
+};
+
 export const postsReducer = postsSlice.reducer;

@@ -7,12 +7,19 @@ import Grid from '@mui/material/Grid';
 import { Post } from '../components/Post';
 import { TagsBlock } from '../components/TagsBlock';
 import { CommentsBlock } from '../components/CommentsBlock';
-import { fetchPostsNew, fetchPostsPopular, fetchTags } from '../redux/slices/post';
+import {
+  fetchPostsNew,
+  fetchPostsPopular,
+  fetchTags,
+  selectLastComments,
+} from '../redux/slices/post';
 
 export const Home = () => {
   const [activeSort, setActiveSort] = useState(0);
   const { posts, tags } = useSelector((state) => state.posts);
   const userData = useSelector((state) => state.auth.data);
+  const comments = useSelector(selectLastComments);
+
   const dispatch = useDispatch();
 
   const isPostsLoading = posts.status === 'loading';
@@ -67,25 +74,7 @@ export const Home = () => {
         </Grid>
         <Grid xs={4} item>
           <TagsBlock items={tags.items} isLoading={isTagsLoading} />
-          <CommentsBlock
-            items={[
-              {
-                user: {
-                  fullName: 'Вася Пупкин',
-                  avatarUrl: 'https://mui.com/static/images/avatar/1.jpg',
-                },
-                text: 'Это тестовый комментарий',
-              },
-              {
-                user: {
-                  fullName: 'Иван Иванов',
-                  avatarUrl: 'https://mui.com/static/images/avatar/2.jpg',
-                },
-                text: 'When displaying three lines or more, the avatar is not aligned at the top. You should set the prop to align the avatar at the top',
-              },
-            ]}
-            isLoading={false}
-          />
+          <CommentsBlock items={comments} isLoading={false} />
         </Grid>
       </Grid>
     </>
