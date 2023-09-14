@@ -12,6 +12,7 @@ import SimpleMDE from 'react-simplemde-editor';
 import 'easymde/dist/easymde.min.css';
 import styles from './AddPost.module.scss';
 import toast from 'react-hot-toast';
+import { PORT } from '../../consts';
 
 export const AddPost = () => {
   const { id } = useParams();
@@ -112,7 +113,11 @@ export const AddPost = () => {
           <Button variant='contained' color='error' onClick={onClickRemoveImage}>
             Удалить
           </Button>
-          <img className={styles.image} src={`http://localhost:4444${imageUrl}`} alt='Uploaded' />
+          <img
+            className={styles.image}
+            src={`http://localhost:${PORT}${imageUrl}`}
+            alt='Uploaded'
+          />
         </>
       )}
       <br />

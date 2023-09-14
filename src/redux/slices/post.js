@@ -1,23 +1,24 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../../axios';
+import { ApiRoute } from '../../consts';
 
 export const fetchPostsSortByNew = createAsyncThunk('posts/fetchPostsNew', async () => {
-  const { data } = await axios.get('/posts/new');
+  const { data } = await axios.get(`${ApiRoute.POSTS_NEW}`);
   return data;
 });
 
 export const fetchPostsSortByPopular = createAsyncThunk('posts/fetchPostsPopular', async () => {
-  const { data } = await axios.get('/posts/popular');
+  const { data } = await axios.get(`${ApiRoute.POSTS_POPULAR}`);
   return data;
 });
 
 export const fetchPostsByTag = createAsyncThunk('posts/fetchPostsByTag', async (tag) => {
-  const { data } = await axios.get('/posts/new');
+  const { data } = await axios.get(`${ApiRoute.POSTS_NEW}`);
   return data.filter((item) => item.tags.includes(tag));
 });
 
 export const fetchTags = createAsyncThunk('posts/fetchTags', async () => {
-  const { data } = await axios.get('/tags');
+  const { data } = await axios.get(`${ApiRoute.TAGS}`);
   return data;
 });
 
@@ -108,7 +109,7 @@ export const selectLastComments = (state) => {
   const lastComments = [];
 
   state.posts.posts.items.forEach((item) => {
-    const comments = item.comments.slice().reverse();
+    const comments = item.comments?.slice().reverse();
     lastComments.push(comments[0]);
   });
 

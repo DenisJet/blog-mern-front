@@ -6,6 +6,7 @@ import { Header } from './components';
 import { Home, FullPost, Registration, AddPost, Login, TagsPage } from './pages';
 import { useDispatch } from 'react-redux';
 import { fetchAuthMe } from './redux/slices/auth';
+import { AppRoute } from './consts';
 
 function App() {
   const dispatch = useDispatch();
@@ -19,13 +20,13 @@ function App() {
       <Header />
       <Container maxWidth='lg'>
         <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/posts/:id' element={<FullPost />} />
-          <Route path='/posts/:id/edit' element={<AddPost />} />
-          <Route path='/add-post' element={<AddPost />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/register' element={<Registration />} />
-          <Route path='/tags/:name' element={<TagsPage />} />
+          <Route path={AppRoute.HOME} element={<Home />} />
+          <Route path={AppRoute.POST} element={<FullPost />} />
+          <Route path={AppRoute.POST_EDIT} element={<AddPost />} />
+          <Route path={AppRoute.ADD_POST} element={<AddPost />} />
+          <Route path={AppRoute.LOGIN} element={<Login />} />
+          <Route path={AppRoute.REGISTER} element={<Registration />} />
+          <Route path={AppRoute.TAGS_PAGE} element={<TagsPage />} />
         </Routes>
       </Container>
     </>

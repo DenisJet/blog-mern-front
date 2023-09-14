@@ -6,6 +6,7 @@ import styles from './Header.module.scss';
 import Container from '@mui/material/Container';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, selectIsAuth } from '../../redux/slices/auth';
+import { AppRoute } from '../../consts';
 
 export const Header = () => {
   const isAuth = useSelector(selectIsAuth);
@@ -28,7 +29,7 @@ export const Header = () => {
           <div className={styles.buttons}>
             {isAuth ? (
               <>
-                <Link to='/add-post'>
+                <Link to={AppRoute.ADD_POST}>
                   <Button variant='contained'>Написать статью</Button>
                 </Link>
                 <Button onClick={onClickLogout} variant='contained' color='error'>
@@ -37,10 +38,10 @@ export const Header = () => {
               </>
             ) : (
               <>
-                <Link to='/login'>
+                <Link to={AppRoute.LOGIN}>
                   <Button variant='outlined'>Войти</Button>
                 </Link>
-                <Link to='/register'>
+                <Link to={AppRoute.REGISTER}>
                   <Button variant='contained'>Создать аккаунт</Button>
                 </Link>
               </>
