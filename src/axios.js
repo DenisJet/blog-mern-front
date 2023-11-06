@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { PORT } from './consts';
+import { BASEURL } from './consts';
 
 const instance = axios.create({
-  baseURL: `http://localhost:${PORT}`,
+  baseURL: BASEURL,
 });
 
 instance.interceptors.request.use((config) => {

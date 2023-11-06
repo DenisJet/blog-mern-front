@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Grid from '@mui/material/Grid';
 import { Post } from '../components/Post';
 import { fetchPostsByTag } from '../redux/slices/post';
+import { BASEURL } from '../consts';
 
 export const TagsPage = () => {
   const { name } = useParams();
@@ -29,7 +30,7 @@ export const TagsPage = () => {
             <Post
               id={obj._id}
               title={obj.title}
-              imageUrl={obj.imageUrl ? `http://localhost:8080${obj.imageUrl}` : ''}
+              imageUrl={obj.imageUrl ? `${BASEURL}${obj.imageUrl}` : ''}
               user={obj.user}
               createdAt={obj.createdAt}
               viewsCount={obj.viewsCount}

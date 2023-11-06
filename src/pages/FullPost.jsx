@@ -8,6 +8,7 @@ import { Post } from '../components/Post';
 import { Index } from '../components/AddComment';
 import { CommentsBlock } from '../components/CommentsBlock';
 import toast from 'react-hot-toast';
+import { BASEURL } from '../consts';
 
 export const FullPost = () => {
   const userData = useSelector((state) => state.auth.data);
@@ -38,7 +39,7 @@ export const FullPost = () => {
       <Post
         id={data._id}
         title={data.title}
-        imageUrl={data.imageUrl ? `http://localhost:8080${data.imageUrl}` : ''}
+        imageUrl={data.imageUrl ? `${BASEURL}${data.imageUrl}` : ''}
         user={data.user}
         createdAt={data.createdAt}
         viewsCount={data.viewsCount}

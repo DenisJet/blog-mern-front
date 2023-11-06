@@ -1,4 +1,6 @@
-export const PORT = 8080;
+export const PORT = 3000;
+
+export const BASEURL = 'https://eftiedienak.beget.app';
 
 export const AppRoute = {
   HOME: '/',
@@ -16,5 +18,5 @@ export const ApiRoute = {
   ME: '/auth/me',
   POSTS_NEW: '/posts/new',
   POSTS_POPULAR: '/posts/popular',
-  TAGS: '/tags'
+  TAGS: '/tags',
 };

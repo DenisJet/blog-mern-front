@@ -13,12 +13,14 @@ import {
   fetchTags,
   selectLastComments,
 } from '../redux/slices/post';
+import { BASEURL } from '../consts';
 
 export const Home = () => {
   const [activeSort, setActiveSort] = useState(0);
   const { posts, tags } = useSelector((state) => state.posts);
   const userData = useSelector((state) => state.auth.data);
   const comments = useSelector(selectLastComments);
+  // console.log(comments);
 
   const dispatch = useDispatch();
 
@@ -61,7 +63,7 @@ export const Home = () => {
                 key={obj._id}
                 id={obj._id}
                 title={obj.title}
-                imageUrl={obj.imageUrl ? `http://localhost:8080${obj.imageUrl}` : ''}
+                imageUrl={obj.imageUrl ? `${BASEURL}${obj.imageUrl}` : ''}
                 user={obj.user}
                 createdAt={obj.createdAt}
                 viewsCount={obj.viewsCount}
