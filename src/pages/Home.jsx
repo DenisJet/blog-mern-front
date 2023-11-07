@@ -20,7 +20,6 @@ export const Home = () => {
   const { posts, tags } = useSelector((state) => state.posts);
   const userData = useSelector((state) => state.auth.data);
   const comments = useSelector(selectLastComments);
-  // console.log(comments);
 
   const dispatch = useDispatch();
 
